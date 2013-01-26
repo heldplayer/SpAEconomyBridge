@@ -1,7 +1,9 @@
 package com.iCo6;
 
-import com.SpAEconomy.SpAEconomy;
 import java.util.logging.Logger;
+
+import me.heldplayer.SpAEconomy.SpAEconomy;
+
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
