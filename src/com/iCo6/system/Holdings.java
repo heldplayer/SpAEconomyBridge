@@ -6,8 +6,6 @@ import me.heldplayer.SpAEconomy.SpAEconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.iCo6.iConomy;
-
 public class Holdings {
 
     private String name;
@@ -17,7 +15,7 @@ public class Holdings {
     }
 
     public Double getBalance() {
-        Player player = Bukkit.getPlayer(name);
+        Player player = Bukkit.getPlayer(this.name);
 
         String account = SpAEconomy.defaultAccountName;
 
@@ -25,14 +23,16 @@ public class Holdings {
             account = SpAEconomy.getAccountForWorld(player.getWorld());
         }
 
+        Double result = 0.0D;
+
         if (account != null) {
-            return iConomy.plugin.accounts.getBalance(name, account);
+            result = SpAEconomy.instance.accounts.getBalance(this.name, account);
         }
-        return 0.0D;
+        return result == null ? 0.0D : result;
     }
 
     public void setBalance(double balance) {
-        Player player = Bukkit.getPlayer(name);
+        Player player = Bukkit.getPlayer(this.name);
 
         String account = SpAEconomy.defaultAccountName;
 
@@ -41,55 +41,55 @@ public class Holdings {
         }
 
         if (account != null) {
-            iConomy.plugin.accounts.setBalance(name, account, balance);
+            SpAEconomy.instance.accounts.setBalance(this.name, account, balance);
         }
     }
 
     public void add(double amount) {
-        double balance = getBalance().doubleValue();
+        double balance = this.getBalance();
         double ending = balance + amount;
 
-        math(amount, balance, ending);
+        this.math(amount, balance, ending);
     }
 
     public void subtract(double amount) {
-        double balance = getBalance().doubleValue();
+        double balance = this.getBalance();
         double ending = balance - amount;
 
-        math(amount, balance, ending);
+        this.math(amount, balance, ending);
     }
 
     public void divide(double amount) {
-        double balance = getBalance().doubleValue();
+        double balance = this.getBalance();
         double ending = balance / amount;
 
-        math(amount, balance, ending);
+        this.math(amount, balance, ending);
     }
 
     public void multiply(double amount) {
-        double balance = getBalance().doubleValue();
+        double balance = this.getBalance();
         double ending = balance * amount;
 
-        math(amount, balance, ending);
+        this.math(amount, balance, ending);
     }
 
     private void math(double amount, double balance, double ending) {
-        setBalance(ending);
+        this.setBalance(ending);
     }
 
     public boolean isNegative() {
-        return getBalance().doubleValue() < 0.0D;
+        return this.getBalance() < 0.0D;
     }
 
     public boolean hasEnough(double amount) {
-        return amount <= getBalance().doubleValue();
+        return amount <= this.getBalance();
     }
 
     public boolean hasOver(double amount) {
-        return amount < getBalance().doubleValue();
+        return amount < this.getBalance();
     }
 
     public boolean hasUnder(double amount) {
-        return amount > getBalance().doubleValue();
+        return amount > this.getBalance();
     }
 }

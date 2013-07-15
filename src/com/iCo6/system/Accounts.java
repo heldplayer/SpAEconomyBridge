@@ -8,8 +8,6 @@ import me.heldplayer.SpAEconomy.SpAEconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.iCo6.iConomy;
-
 public class Accounts {
 
     public boolean exists(String name) {
@@ -22,17 +20,17 @@ public class Accounts {
         }
 
         if (account != null) {
-            return iConomy.plugin.accounts.exists(name, account, false);
+            return SpAEconomy.instance.accounts.exists(name, account);
         }
         return false;
     }
 
     public boolean create(String name) {
-        return create(name, SpAEconomy.startingMoney);
+        return this.create(name, SpAEconomy.startingMoney);
     }
 
     public boolean create(String name, Double balance) {
-        return create(name, balance, 0);
+        return this.create(name, balance, 0);
     }
 
     public boolean create(String name, Double balance, Integer status) {
@@ -45,8 +43,8 @@ public class Accounts {
         }
 
         if (account != null) {
-            iConomy.plugin.accounts.create(name, account, balance);
-            iConomy.plugin.accounts.setHidden(name, account, status <= 0 ? false : true);
+            SpAEconomy.instance.accounts.create(name, account, balance);
+            SpAEconomy.instance.accounts.setHidden(name, account, status <= 0 ? false : true);
             return true;
         }
         return false;
